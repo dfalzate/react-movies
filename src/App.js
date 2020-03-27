@@ -1,52 +1,63 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import './App.css';
-import axios from 'axios';
-import Movies from './components/movies';
-require('dotenv').config();
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+  Link
+} from 'react-router-dom';
+import Home from './pages/Home';
+import NowPlaying from './pages/NowPlaying';
+import Popular from './pages/Popular';
+import TopRated from './pages/TopRated';
+import UpComing from './pages/UpComing';
+import styled from 'styled-components';
 
-class App extends React.Component {
-  state = {
-    movies: [],
-    loading: false,
-    error: null
-  };
-
-  async componentDidMount() {
-    try {
-      this.setState({ loading: true });
-      const movies = await axios({
-        method: 'get',
-        url: `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=1`,
-        params: {
-          _page: 1
-        }
-      });
-      console.log(movies.data.results);
-      this.setState({
-        movies: movies.data.results
-      });
-    } catch (error) {
-      this.setState({ error: error });
-    } finally {
-      this.setState({ loading: false });
-    }
+const LinkStyled = styled(Link)`
+  background-color: Gray;
+  color: white;
+  height: 3em;
+  width: 8em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  &:hover {
+    background-color: lightgray;
+    text-decoration: none;
   }
+`;
 
-  render() {
-    if (this.state.loading === true) {
-      return <h2>Loading...</h2>;
-    } else if (this.state.error) {
-      return <h2>{this.state.error}</h2>;
-    } else if (this.state.loading === false) {
-      return (
-        <div className="movies">
-          <h1>Movies</h1>
-          <Movies movies={this.state.movies} />
-        </div>
-      );
-    }
-  }
+const MenuStyle = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 1em;
+  margin-bottom: 1em;
+`;
+
+function App() {
+  return (
+    <Router>
+      <MenuStyle>
+        <LinkStyled to="/">Home</LinkStyled>
+        <LinkStyled to="/nowplaying/1">Now playing</LinkStyled>
+        <LinkStyled to="/popular">Popular</LinkStyled>
+        <LinkStyled to="/toprated">Top rated</LinkStyled>
+        <LinkStyled to="/upcoming">Up coming</LinkStyled>
+      </MenuStyle>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/nowplaying/:id" component={NowPlaying} />
+        <Route exact path="/popular" component={Popular} />
+        <Route exact path="/toprated" component={TopRated} />
+        <Route exact path="/upcoming" component={UpComing} />
+        <Redirect from="*" to="/" />
+      </Switch>
+    </Router>
+  );
 }
 
 export default App;
