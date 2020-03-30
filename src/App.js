@@ -50,7 +50,7 @@ function App() {
       </MenuStyle>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/nowplaying/:id" component={NowPlaying} />
+        <Route exact path="/nowplaying/:pageId" component={NowPlaying} />
         <Route exact path="/popular" component={Popular} />
         <Route exact path="/toprated" component={TopRated} />
         <Route exact path="/upcoming" component={UpComing} />
