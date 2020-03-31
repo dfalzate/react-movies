@@ -41,13 +41,15 @@ const MenuStyle = styled.div`
 function App() {
   return (
     <Router>
-      <MenuStyle>
-        <LinkStyled to="/">Home</LinkStyled>
-        <LinkStyled to="/nowplaying/1">Now playing</LinkStyled>
-        <LinkStyled to="/popular">Popular</LinkStyled>
-        <LinkStyled to="/toprated">Top rated</LinkStyled>
-        <LinkStyled to="/upcoming">Up coming</LinkStyled>
-      </MenuStyle>
+      <nav>
+        <MenuStyle>
+          <LinkStyled to="/">Home</LinkStyled>
+          <LinkStyled to="/nowplaying/1">Now playing</LinkStyled>
+          <LinkStyled to="/popular">Popular</LinkStyled>
+          <LinkStyled to="/toprated">Top rated</LinkStyled>
+          <LinkStyled to="/upcoming">Up coming</LinkStyled>
+        </MenuStyle>
+      </nav>
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/nowplaying/:pageId" component={NowPlaying} />
